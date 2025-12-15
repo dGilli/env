@@ -1,0 +1,9 @@
+[submodule "resources/personal"]
+    path = resources/personal
+    url = git@github.com:dGilli/dotfiles-personal.git
+[submodule "env/.config/nvim"]
+	path = env/.config/nvim
+	url = git@github.com:dGilli/dotfiles-nvim.git
+[submodule "tmux-sessionizer"]
+	path = tmux-sessionizer
+	url = git@github.com:ThePrimeagen/tmux-sessionizer.git
