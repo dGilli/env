@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+git submodule init
+git submodule update
+
+pushd env/.config/nvim || exit 1
+git checkout main
+popd || exit 1
+
+pushd tmux-sessionizer || exit 1
+git checkout master
+popd || exit 1
+
+pushd env/personal || exit 1
+git checkout main
+popd || exit 1
+
