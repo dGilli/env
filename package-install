@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+check() {
+    if [[ -z $2 ]] || [[ $2 == "$1" ]] && command -v "$1" &> /dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+install_package() {
+    filter="$2"
+    installArgs=$(echo "$3 $1" | xargs) # flags + pkg
+
+    if check "brew" "$filter"; then
+        brew install "$installArgs"
+    elif check "apt" "$filter"; then
+        sudo apt update && sudo apt install -y "$installArgs"
+    elif check "dnf" "$filter"; then
+        sudo dnf install -y "$installArgs"
+    elif check "pacman" "$filter"; then
+        sudo pacman -S --noconfirm "$installArgs"
+    fi
+}
+
+if [ "$#" -eq 0 ]; then
+  echo "Usage: $0 <package_name[<optional pkg manager filter and flags>]>"
+  exit 1
+fi
+
+regex="^(.+)\[(.+)\]"
+
+for pkg in "$@"; do
+    if [[ $pkg =~ $regex ]]; then
+        pkg=${BASH_REMATCH[1]}
+        IFS=',' read -r -a tags <<< "${BASH_REMATCH[2]}"
+    fi
+
+    if [ "${#tags[@]}" -eq 0 ]; then
+        install_package "$pkg"
+    else
+        for tag in "${tags[@]}"; do
+            if [[ "$tag" == *" "* ]]; then
+                install_package "$pkg" "${tag%% *}" "${tag#* }"
+            else
+                install_package "$pkg" "${tag%% *}"
+            fi
+        done
+    fi
+done
+

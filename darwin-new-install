@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+DEV_ENV=$(pwd) OS=darwin ./env-install onedrive
+
