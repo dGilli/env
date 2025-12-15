@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+"$DEV_ENV"/package-install "onedrive[brew --cask]" "veracrypt[brew --cask]"
+
+if [ "$OS" == "darwin" ]; then
+    launch_agent="$HOME/Library/LaunchAgents/com.dennisgilli.MountOneDriveAES.plist"
+    mount_script="$HOME/.local/scripts/mount-onedrive-aes"
+    temp_file=$(mktemp) # write plist to temporary file first to avoid SC2094
+
+    cat << EOF > "$temp_file"
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+    <key>Label</key>
+    <string>$(basename "$launch_agent")</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>$mount_script</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
+EOF
+
+    chown "$USER":staff "$temp_file"
+    chmod 755 "$temp_file"
+
+    mv "$temp_file" "$launch_agent"
+
+    if launchctl list | grep -q "$(basename "$launch_agent")"; then
+        launchctl unload "$launch_agent"
+    fi
+
+    launchctl load "$launch_agent"
+fi

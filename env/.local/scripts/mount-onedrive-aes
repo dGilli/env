@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+veracrypt_volume="$HOME/Library/CloudStorage/OneDrive-AlivantAG/ONEDRIVE_AES"
+mount_target="$HOME/$(basename "$veracrypt_volume")"
+
+if [ ! -d "$mount_target" ]; then
+    /usr/local/bin/veracrypt "$veracrypt_volume" "$mount_target"
+fi
+
