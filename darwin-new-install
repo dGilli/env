@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+DEV_ENV=$(pwd) OS=darwin ./env-install sketchybar
+DEV_ENV=$(pwd) OS=darwin ./env-install yabai
 DEV_ENV=$(pwd) OS=darwin ./env-install onedrive
 
