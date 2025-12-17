@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+curl -L https://raw.githubusercontent.com/asmvik/yabai/master/scripts/install.sh | sh /dev/stdin
+
+configure_scripting_addition() {
+    echo "SIP is disabled"
+    local yabai_sha256
+    yabai_sha256=$(shasum -a 256 "$(which yabai)" | cut -d " " -f 1)
+
+    echo "$(whoami) ALL=(root) NOPASSWD: sha256:$yabai_sha256 $(which yabai) --load-sa" | sudo tee /private/etc/sudoers.d/yabai
+}
+
+open_sip_instructions() {
+    echo "SIP is enabled or csrutil failed"
+    local disable_sip_url="https://github.com/asmvik/yabai/wiki/Disabling-System-Integrity-Protection"
+
+    echo "Follow the instructions at the URL opened below to disable System Integrity Protection (SIP):"
+    printf '%s\n' "$disable_sip_url"
+    open "$disable_sip_url"
+    echo "Rerun this script if you have decided to disable SIP and restarted your computer."
+}
+
+if csrutil status 2>/dev/null | grep -q "System Integrity Protection status: disabled"; then
+    configure_scripting_addition
+else
+    open_sip_instructions
+fi
+
