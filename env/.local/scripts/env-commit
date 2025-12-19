@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+project="$HOME"/projects
+
+pushd "$project"/env/.config/nvim || exit
+git add .
+git commit -m 'automated dev commit'
+git push
+popd || exit
+
+pushd "$project"/tmux-sessionizer || exit
+git add .
+git commit -m 'automated dev commit'
+git push
+popd || exit
+
+pushd "$project" || exit
+git add .
+git commit -m 'automated dev commit'
+git push
+popd || exit
+
