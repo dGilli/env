@@ -28,6 +28,6 @@ fi
 git clone "$repo" "$projects"env
 
 pushd "$projects" || exit
-./run
+./run "$@"
 popd || exit
 
