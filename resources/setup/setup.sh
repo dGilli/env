@@ -28,10 +28,6 @@ fi
 git clone "$repo" "$projects"env
 
 pushd "$projects" || exit
-<<<<<<< HEAD
-./run
-=======
 ./env-install "$@"
->>>>>>> f32298a (fixup! add fly.io hosted setup endpoint)
 popd || exit
 
