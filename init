@@ -11,7 +11,7 @@ pushd tmux-sessionizer || exit 1
 git checkout master
 popd || exit 1
 
-pushd env/personal || exit 1
+pushd private || exit 1
 git checkout main
 popd || exit 1
 
