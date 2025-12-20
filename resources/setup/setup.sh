@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+repo="https://github.com/dGilli/env"
+projects="$HOME"/Projects/
+
 cmd_exists() {
     command -v "$1" &> /dev/null
 }
@@ -18,13 +21,11 @@ if ! cmd_exists git; then
     install_git
 fi
 
-projects="$HOME"/Projects/
-
 if [ ! -d "$projects" ]; then
     mkdir "$projects"
 fi
 
-git clone https://github.com/dGilli/env "$projects"env
+git clone "$repo" "$projects"env
 
 pushd "$projects" || exit
 ./run
