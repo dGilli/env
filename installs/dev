@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+"$DEV_ENV"/package-install go fzf btop
+go install github.com/air-verse/air@latest
+"$DEV_ENV"/package-install font-agave-nerd-font font-awesome font-symbols-only-nerd-font
+"$DEV_ENV"/package-install ghostty
+
+curl -sSfL https://get.tur.so/install.sh | bash
+curl -L https://fly.io/install.sh | sh
+

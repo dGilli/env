@@ -1,0 +1,21 @@
+config-file = ?config-override
+
+macos-icon              = custom-style
+macos-icon-screen-color = #2a2a2a,#7b7b7b
+macos-icon-ghost-color  = #ffffff
+
+theme                   = Neobones Dark
+
+font-family             = Agave Nerd Font Mono
+font-size               = 18
+adjust-cell-height      = 6
+font-feature            = -calt, -liga, and -dlig
+
+window-decoration       = false
+background              = #000000
+background-opacity      = 0.8
+
+cursor-style            = block
+
+#custom-shader           = shaders/drunkard.glsl
+
