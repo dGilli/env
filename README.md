@@ -5,5 +5,5 @@
 # My Dootfiles
 
 ```shell
-/bin/bash -c "$(curl -fsSL https://env-setup.fly.dev)"
+/bin/bash -c "$(curl -fsSL https://env-setup.fly.dev)" -- arg1 arg2
 ```
