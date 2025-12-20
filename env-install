@@ -87,7 +87,7 @@ copy "$DEV_ENV"/env/.zshrc "$HOME"/.zshrc
 copy "$DEV_ENV"/env/.tmux-sessionizer "$HOME"/.tmux-sessionizer
 copy "$DEV_ENV"/env-install "$HOME"/.local/scripts/env-install
 
-installs_dir=$(find "$script_dir"/installs -mindepth 1 -maxdepth 1 -type f -perm -111)
+installs_dir=$(find "$script_dir"/installs "$script_dir"/private/installs -mindepth 1 -maxdepth 1 -type f -perm -111)
 
 for s in $installs_dir; do
     if basename "$s" | grep -vq "$grep"; then
