@@ -19,3 +19,4 @@ cursor-style            = block
 
 #custom-shader           = shaders/drunkard.glsl
 
+command = ~/.config/ghostty/launch_tmux
