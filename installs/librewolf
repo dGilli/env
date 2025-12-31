@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+"$DEV_ENV"/package-install librewolf
+
+config_file="$HOME/.config/librewolf/librewolf.overrides.cfg"
+
+if [ "$OS" == "linux" ]; then
+    ln -s "$config_file" "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf/librewolf.overrides.cfg"
+elif [ "$OS" == "darwin" ]; then
+    ln -s "$config_file" "$HOME/.librewolf/librewolf.overrides.cfg"
+fi
+
