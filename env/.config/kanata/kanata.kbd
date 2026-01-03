@@ -1,0 +1,64 @@
+(defcfg
+  process-unmapped-keys yes
+  linux-dev /dev/input/by-path/platform-i8042-serio-0-event-kbd
+)
+
+(defsrc
+  u
+  caps a s d f j k l ;
+)
+(platform (macos)
+  (defsrc
+    f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12
+    u
+    caps a s d f j k l ;
+    fn
+  )
+)
+
+(defvar
+  tap-time 150
+  hold-time 200
+)
+
+(defalias
+  escctrl (tap-hold 100 100 esc lctl)
+  a (multi f24 (tap-hold $tap-time $hold-time a lmet))
+  s (multi f24 (tap-hold $tap-time $hold-time s lalt))
+  d (multi f24 (tap-hold $tap-time $hold-time d lsft))
+  f (multi f24 (tap-hold $tap-time $hold-time f lctl))
+  j (multi f24 (tap-hold $tap-time $hold-time j rctl))
+  k (multi f24 (tap-hold $tap-time $hold-time k rsft))
+  l (multi f24 (tap-hold $tap-time $hold-time l ralt))
+  ; (multi f24 (tap-hold $tap-time $hold-time ; rmet))
+  umlaut (fork u (one-shot-release 2000 (layer-while-held umlaut)) (lalt))
+)
+
+(deflayer base
+  @umlaut
+  @escctrl @a @s @d @f @j @k @l @;
+)
+
+(platform (macos)
+  (deflayer macosbase
+    🔅 🔆 mctl sls dtn dnd ◀◀ ▶⏸ ▶▶ 🔇 🔉 🔊
+    @umlaut
+    @escctrl @a @s @d @f @j @k @l @;
+    (layer-while-held base)
+  )
+)
+
+(deflayermap (umlaut)
+  u (fork (unicode ü) (unicode Ü) (lsft rsft))
+  o (fork (unicode ö) (unicode Ö) (lsft rsft))
+  a (fork (unicode ä) (unicode Ä) (lsft rsft))
+)
+
+(defoverrides
+  (lalt h) (left)
+  (lalt j) (down)
+  (lalt k) (up)
+  (lalt l) (right)
+  (lsft bspc) (del)
+)
+
