@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Download bin and put it somewhere
+dlbin() {
+    curl -fsSL -O "$1" || { echo "Download failed"; exit 1; }
+    unzip "./$(basename $1)" || { echo "Extraction failed"; rm "./$(basename $1)"; exit 1; }
+    bin="$(grep -l ^kanata * 2>/dev/null | grep -v cmd)"
+    chmod +x "$bin"
+    cp "$bin" "$2"
+}
+
+grep="$OS"
+
+if [ "$OS" == "darwin" ]; then
+    grep=macos
+    brew install --cask karabiner-elements
+elif [ -z "$OS" ]; then
+    echo "env var OS needs to be present"
+    exit 1
+fi
+
+dl_url="https://api.github.com/repos/jtroo/kanata/releases/latest"
+dl="$(curl -s "$dl_url" | grep "browser_download_url" | cut -d '"' -f 4 | grep $grep)"
+
+mkdir kanata
+pushd kanata || exit 1
+dlbin "$dl" "$HOME/.local/bin/kanata"
+popd || exit 1
+rm kanata
+
