@@ -4,7 +4,9 @@
 go install github.com/air-verse/air@latest
 "$DEV_ENV"/package-install font-agave-nerd-font font-awesome font-symbols-only-nerd-font
 "$DEV_ENV"/package-install ghostty
+go install github.com/sigstore/cosign/v3/cmd/cosign@latest
 
 curl -sSfL https://get.tur.so/install.sh | bash
 curl -L https://fly.io/install.sh | sh
+curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -v -b "$HOME"/.local/bin
 

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2046
+trufflehog filesystem $(git diff --cached --name-only | tr '\n' ' ') || exit 1
+
