@@ -4,9 +4,17 @@
 
 config_file="$HOME/.config/librewolf/librewolf.overrides.cfg"
 
+addons=(
+    "https://addons.mozilla.org/en-US/firefox/addon/darkreader/"
+    "https://addons.mozilla.org/en-US/firefox/addon/proton-pass/"
+    "https://addons.mozilla.org/en-US/firefox/addon/hide-youtube-shorts/"
+)
+
 if [ "$OS" == "linux" ]; then
     ln -s "$config_file" "$HOME/.var/app/io.gitlab.librewolf-community/.librewolf/librewolf.overrides.cfg"
 elif [ "$OS" == "darwin" ]; then
     ln -s "$config_file" "$HOME/.librewolf/librewolf.overrides.cfg"
 fi
+
+librewolf --setDefaultBrowser "${addons[@]}"
 
