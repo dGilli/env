@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    service_name="com.kanata"
+
+    is_loaded() {
+        sudo launchctl list | grep -q "$service_name"
+    }
+
+    launchctl_seq() {
+        sudo launchctl "$1" system /Library/LaunchDaemons/"$service_name".plist
+        sudo launchctl "$2" system/"$service_name".plist
+        sudo launchctl "$3" "$service_name"
+    }
+
+    if [ "$1" == "enable" ] || ! is_loaded; then
+        echo "Info: starting Kanata"
+        launchctl_seq bootstrap enable start
+
+        if ! is_loaded; then
+            echo "Error: unable to start Kanata"
+            sudo cat /Library/Logs/Kanata/kanata.err.log
+            exit 1
+        fi
+    else
+        echo "Info: stopping Kanata"
+        launchctl_seq bootout disable stop
+    fi
+#elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+else
+    echo "Unsupported OS: $OSTYPE"
+    exit 1
+fi
+
+
