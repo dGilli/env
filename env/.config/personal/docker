@@ -1,0 +1,4 @@
+alias dk='docker'
+alias dc='docker-compose'
+alias dkill='docker stop $(docker ps -q)'
+alias dlast='docker exec -it $(docker ps -l -q)'

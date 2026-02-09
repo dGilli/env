@@ -2,7 +2,7 @@ VIM="nvim"
 
 PERSONAL="${XDG_CONFIG_HOME:-${2:-$HOME/.config}}"/personal
 DEV_ENV=$HOME/dev
-source $PERSONAL/env
+
 for i in `find -L $PERSONAL`; do
     source $i
 done
@@ -43,3 +43,6 @@ addToPathFront $HOME/.local/go/bin
 addToPathFront $HOME/.deno/bin
 addToPathFront $HOME/.fly/bin
 
+alias pbc="pbcopy"
+alias opena="open -a"
+alias ll="ls -lh"
