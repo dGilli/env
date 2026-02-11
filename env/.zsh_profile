@@ -42,6 +42,9 @@ addToPathFront $HOME/.local/npm/bin
 addToPathFront $HOME/.local/go/bin
 addToPathFront $HOME/.deno/bin
 addToPathFront $HOME/.fly/bin
+addToPathFront $ANDROID_HOME/platform-tools
+addToPathFront $ANDROID_HOME/build-tools/34.0.0
+addToPathFront $ANDROID_HOME/cmdline-tools/latest/bin
 
 alias pbc="pbcopy"
 alias opena="open -a"
