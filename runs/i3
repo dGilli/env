@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+dnf install -y i3
+
+#SHELL_VERSION=$(gnome-shell --version | grep -oP '\d+')
+#
+#curl -sL "https://extensions.gnome.org/extension/5090/space-bar/?shell_version=$SHELL_VERSION" -o /tmp/space-bar.zip
+#
+#gnome-extensions install --force /tmp/space-bar.zip
+#
+#rm /tmp/space-bar.zip
+#
+#busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Main.overview.hide(); Main.sessionMode.reloadUserSession();'

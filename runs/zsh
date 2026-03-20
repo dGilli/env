@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+sudo dnf install -y zsh
+zsh --version
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+sudo usermod -s $(which zsh) $(whoami)
+
+echo "INFO: Log out of your session and then log back in for the changes to take effect"

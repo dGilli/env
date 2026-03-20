@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+if [ -z "$OS" ]; then
+    echo "env var OS needs to be present"
+    exit 1
+fi
+
+repo="jtroo/kanata"
+release="tags/v1.9.0"
+
+dl_github_release() {
+    assets="$(curl -s "$1" | grep "browser_download_url" | cut -d '"' -f 4)"
+    #echo "$assets"
+    url="$(echo "$assets" | grep -E $2)"
+    #echo "url: $url"
+    curl -fsSL -O "$url" || { echo "Download failed"; exit 1; }
+    echo "$(basename $url)"
+}
+
+dl_github_release "https://api.github.com/repos/$repo/releases/$release" 'kanata$'
+
+chmod +x kanata
+mv kanata /usr/bin
+restorecon /usr/bin/kanata
+
+mkdir -p /etc/kanata
+ln -fs /home/"$SUDO_USER"/.config/kanata/kanata.kbd /etc/kanata/
+
+service="$script_dir/../resources/systemd/kanata.service"
+
+systemd-analyze verify $service
+
+cp "$service" /etc/systemd/system/kanata.service
+
+systemctl start kanata
+systemctl enable kanata
+

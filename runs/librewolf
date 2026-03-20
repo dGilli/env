@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+sudo dnf config-manager --add-repo https://repo.librewolf.net/librewolf.repo
+sudo dnf install librewolf

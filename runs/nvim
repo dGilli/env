@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+#set -e pipefail
+
+grep="$(uname -s | awk '{print tolower($0)}')-$(uname -m | awk -F'_' '{print $1}').*.appimage$"
+
+dl() {
+    dl="$(curl -s "https://api.github.com/repos/$1/releases" | \
+        jq '.[0]' | \
+        grep "browser_download_url" | \
+        cut -d '"' -f 4 | \
+        grep -E "$2")"
+    curl -fsSL -O "$dl" || { echo "Download failed"; exit 1; }
+    echo "$(basename $dl)"
+}
+
+dl=$(dl "neovim/neovim" $grep)
+chmod u+x $dl
+mv $dl $HOME/.local/bin/nvim
+
+sudo dnf install -y tree-sitter-cli
+
+
+
+#grep="$(uname -s | awk '{print tolower($0)}')-$(uname -m | awk -F'_' '{print $1}').\*.appimage$"
+#echo "$grep"
+#curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" | grep "browser_download_url" | cut -d '"' -f 4 | grep -E $grep
+#dl=$(dl "neovim/neovim" "$grep")
+#echo "$dl"
+#
+#chmod u+x $dl
+#mv $dl $HOME/.local/bin/nvim
+#nvim --version
+
+#dl_github_release() {
+#    dl="$(curl -s "https://api.github.com/repos/"$1"/releases/latest" | grep "browser_download_url" | cut -d '"' -f 4 | grep "$2")"
+#    curl -fsSL -O "$dl" || { echo "Download failed"; exit 1; }
+#    echo "$(basename $dl)"
+#}
+#
+#grep="cli-$(uname -s | awk '{print tolower($0)}')-$(uname -m | awk -F'_' '{print $1}')"
+#tmp_dir="$(mktemp -d)"
+#
+#pushd $tmp_dir || exit 1
+#dl=$(dl_github_release "tree-sitter/tree-sitter" "$grep")
+#unzip "./$dl" || { echo "Extraction failed"; rm "./$dl"; exit 1; }
+#popd || exit 1
+#
+#mkdir -p $HOME/.local/bin
+#cp $tmp_dir/tree-sitter $HOME/.local/bin/
+#chmod +x $HOME/.local/bin/tree-sitter
+
+#rm -r $tmp_dir
+
+#pushd nvim || exit 1
+#dl=$(dl_github_release "tree-sitter/tree-sitter" $(uname -s)-$(uname -m)) "https://api.github.com/repos/jtroo/kanata/releases/latest" $OS)
+#unzip "./$dl" || { echo "Extraction failed"; rm "./$dl"; exit 1; }
+#
+#bin=$(grep -le .zip * | grep -v cmd)
+#echo "$bin"
+#
+#popd || exit 1
+#
+#sudo dnf install neovim:!

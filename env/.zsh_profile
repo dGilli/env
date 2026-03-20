@@ -1,0 +1,26 @@
+VIM="nvim"
+
+export GIT_EDITOR=$VIM
+
+git config --global init.defaultBranch main
+
+addToPath() {
+    if [[ "$PATH" != *"$1"* ]]; then
+        export PATH=$PATH:$1
+    fi
+}
+
+addToPathFront() {
+    if [[ ! -z "$2" ]] || [[ "$PATH" != *"$1"* ]]; then
+        export PATH=$1:$PATH
+    fi
+}
+
+addToPathFront $HOME/.opencode/bin
+
+alias vi=$VIM
+alias vim=$VIM
+alias oc="opencode"
+alias oco="opencode"
+alias copy="xclip -sel clip"
+

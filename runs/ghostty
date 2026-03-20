@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+dnf upgrade -y
+
+subscription-manager repos --enable "rhel-*-optional-rpms" --enable "rhel-*-extras-rpms"
+yum update -y
+
+yum install -y snapd
+
+systemctl enable --now snapd.socket
+
+ln -s /var/lib/snapd/snap /snap
+
+snap install -y ghostty --classic
+
+cp /var/lib//snapd/desktop/applications/ghostty_ghostty.desktop ~/.local/share/applications/
+chmod +x .local/share/applications/ghostty_ghostty.desktop
+update-desktop-database .local/share/applications/
