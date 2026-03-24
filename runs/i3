@@ -2,14 +2,14 @@
 
 set -e
 
-dnf install -y i3
+tmp_dir="$(mktemp -d)"
+trap 'rm -rf "$tmp_dir"' EXIT
 
-#SHELL_VERSION=$(gnome-shell --version | grep -oP '\d+')
-#
-#curl -sL "https://extensions.gnome.org/extension/5090/space-bar/?shell_version=$SHELL_VERSION" -o /tmp/space-bar.zip
-#
-#gnome-extensions install --force /tmp/space-bar.zip
-#
-#rm /tmp/space-bar.zip
-#
-#busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Main.overview.hide(); Main.sessionMode.reloadUserSession();'
+dnf install -y i3 imlib2-devel xcompmgr xorg-x11-utils
+
+pushd $tmp_dir || exit 1
+git clone https://github.com/derf/feh.git
+make
+sudo make install
+popd || exit 1
+
