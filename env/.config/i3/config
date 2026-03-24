@@ -11,10 +11,6 @@
 
 set $mod Mod4
 
-# Disable built-in mouse warping — handled by i3-listener.sh instead,
-# which warps for all windows except ghostty.
-mouse_warping none
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 8
@@ -188,19 +184,3 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
-
-exec --no-startup-id xinput set-prop 'VEN_0488:00 0488:107E Touchpad' 'libinput Natural Scrolling Enabled' 1
-exec --no-startup-id xinput set-prop 'VEN_0488:00 0488:107E Touchpad' 'libinput Accel Speed' 0.3
-
-set $repeat-delay 150
-set $repeat-rate 30
-
-exec --no-startup-id xset r rate $repeat-delay $repeat-rate
-
-exec --no-startup-id ~/.local/scripts/i3-listener.sh
-
-exec --no-startup-id ghostty, librewolf
-
-exec --no-startup-id feh --bg-scale resources/wallpapers/13.\ One\ Dark.png
-
-exec --no-startup-id xcompmgr -c
