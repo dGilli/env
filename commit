@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+read -t 10 -p "Commit everything? [y/N] " a
+if [[ $a =~ ^[Yy]$ ]]; then
+  :
+else
+  echo "Cancelled"
+  exit 0
+fi
+
+pushd $script_dir
+git add .
+git commit -m 'automated dev commit'
+git push
+popd
+
