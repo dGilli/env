@@ -1,0 +1,14 @@
+# Dell WD25 Dock - monitor hotplug workaround
+# Matches the K2 DOCK HID device (413c:b06e)
+#
+# Installation:
+# sudo cp /home/dgilli/.local/scripts/99-dell-dock-hotplug.rules /etc/udev/rules.d/
+# sudo udevadm control --reload-rules
+#
+
+# On connect: cycle xrandr outputs to work around DP alt mode bug
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="413c", ATTR{idProduct}=="b06e", RUN+="/home/dgilli/.local/scripts/dock-monitor-hotplug.sh"
+#
+# On disconnect: move all i3 workspaces to laptop screen
+# Uses PRODUCT match since ATTR{} is unavailable on remove events
+ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="413c/b06e/*", RUN+="/home/dgilli/.local/scripts/dock-monitor-undock.sh"

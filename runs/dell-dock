@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+sudo cp ~/.local/scripts/99-dell-dock-hotplug.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+
+sudo grubby --update-kernel=ALL --args="i915.enable_psr=0"
+echo "INFO: Reboot for PSR disable to take effect"
+
+read -t 10 -p "Reboot now? [y/N] " a
+[[ $a =~ ^[Yy]$ ]] && sudo reboot || echo "Cancelled"
+
