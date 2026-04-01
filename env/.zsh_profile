@@ -23,4 +23,4 @@ alias vim=$VIM
 alias oc="opencode"
 alias oco="opencode"
 alias copy="xclip -sel clip"
-
+alias dk="docker"
