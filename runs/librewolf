@@ -2,3 +2,8 @@
 
 sudo dnf config-manager --add-repo https://repo.librewolf.net/librewolf.repo
 sudo dnf install librewolf
+
+xdg-mime default librewolf.desktop x-scheme-handler/http
+xdg-mime default librewolf.desktop x-scheme-handler/https
+xdg-mime default librewolf.desktop text/html
+echo "text/html; /usr/bin/librewolf %s" >> ~/.mailcap
