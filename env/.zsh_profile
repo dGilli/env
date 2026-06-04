@@ -23,7 +23,6 @@ alias vim=$VIM
 alias oc="opencode"
 alias oco="opencode"
 alias copy="xclip -sel clip"
-alias dk="docker"
 alias screenshot="env -u GDK_PIXBUF_MODULE_FILE gnome-screenshot -f"
 alias hibernate="systemctl hibernate && i3-msg exit"
 
